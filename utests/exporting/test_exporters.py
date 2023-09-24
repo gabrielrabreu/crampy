@@ -30,7 +30,7 @@ class TestQuizExporter(unittest.TestCase):
         with open(source, "r") as reader:
             content = reader.read()
             self.assertIn(f"""<!DOCTYPE html>""", content)
-            self.assertIn(f"""<meta name="description" content="Practice Test">""", content)
+            self.assertIn(f"""<title>Practice Test</title>""", content)
 
     def test_as_practice_test_when_code_not_found_then_should_raise_value_error(self):
         exporter = QuizExporter()
@@ -53,7 +53,7 @@ class TestQuizExporter(unittest.TestCase):
         with open(source, "r") as reader:
             content = reader.read()
             self.assertIn(f"""<!DOCTYPE html>""", content)
-            self.assertIn(f"""<meta name="description" content="Notecards">""", content)
+            self.assertIn(f"""<title>Notecards</title>""", content)
 
     def test_as_notecards_when_code_not_found_then_should_raise_value_error(self):
         exporter = QuizExporter()
