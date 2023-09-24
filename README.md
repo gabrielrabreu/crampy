@@ -20,4 +20,3 @@ CramPy is a python framework that helps students focus and be effective while cr
 
 
 ## Documentation
-
