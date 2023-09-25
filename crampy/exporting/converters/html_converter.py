@@ -30,7 +30,7 @@ class QuizHtmlConverter(QuizConverter):
 class _QuizPracticeTestHtmlConverter:
     @staticmethod
     def _render_style_template() -> str:
-        env = Environment(loader=BaseLoader())
+        env = Environment(loader=BaseLoader(), autoescape=False)
 
         template_string = """
     <style>
@@ -62,7 +62,7 @@ class _QuizPracticeTestHtmlConverter:
 
     @staticmethod
     def _render_header_template(quiz_area: str, quiz_name: str) -> str:
-        env = Environment(loader=BaseLoader())
+        env = Environment(loader=BaseLoader(), autoescape=False)
 
         template_string = """
         <p class="area">{{ quiz_area }}</p>
@@ -77,7 +77,7 @@ class _QuizPracticeTestHtmlConverter:
 
     @staticmethod
     def _render_main_template(questions: list[QuestionModel], depth: int = 0) -> str:
-        env = Environment(loader=BaseLoader())
+        env = Environment(loader=BaseLoader(), autoescape=False)
         env.filters["is_composite"] = _is_composite
         env.filters["is_open_answer"] = _is_open_answer
 
@@ -109,7 +109,7 @@ class _QuizPracticeTestHtmlConverter:
 
     @staticmethod
     def _render_footer_template() -> str:
-        env = Environment(loader=BaseLoader())
+        env = Environment(loader=BaseLoader(), autoescape=False)
 
         template_string = """
         <p>&copy; 2023 CramPy. All rights reserved.</p>
@@ -119,7 +119,7 @@ class _QuizPracticeTestHtmlConverter:
         return template.render()
 
     def render(self, quiz_model: QuizModel) -> str:
-        env = Environment(loader=BaseLoader())
+        env = Environment(loader=BaseLoader(), autoescape=False)
 
         template_string = """
 <!DOCTYPE html>
@@ -155,7 +155,7 @@ class _QuizPracticeTestHtmlConverter:
 class _QuizNotecardsHtmlConverter:
     @staticmethod
     def _render_style_template() -> str:
-        env = Environment(loader=BaseLoader())
+        env = Environment(loader=BaseLoader(), autoescape=False)
         template_string = """
     <style>
         @page {
@@ -210,7 +210,7 @@ class _QuizNotecardsHtmlConverter:
 
     @staticmethod
     def _render_main_template(questions: list[QuestionModel]) -> str:
-        env = Environment(loader=BaseLoader())
+        env = Environment(loader=BaseLoader(), autoescape=False)
 
         amount = len(questions)
         question_list: list[str | None] = []
@@ -264,7 +264,7 @@ class _QuizNotecardsHtmlConverter:
         )
 
     def render(self, quiz_model: QuizModel) -> str:
-        env = Environment(loader=BaseLoader())
+        env = Environment(loader=BaseLoader(), autoescape=False)
         template_string = """
 <!DOCTYPE html>
 <html lang="en">
