@@ -30,7 +30,6 @@ jobs:
       run: |
         pytest -v --cov --cov-report=xml --cov-report=html
     - name: Analysing the code with pylint
-      continue-on-error: true
       run: |
         pylint crampy
     - name: SonarCloud Scan
