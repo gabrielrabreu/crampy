@@ -29,7 +29,7 @@ class QuizExporter:
 
     def _get_converter(self, code: str) -> QuizConverter:
         converters = self._standard_converters
-        if code in converters.keys():
+        if code in converters:
             return converters[code]()
         raise ValueError("Exporting failed: "
                          f"Converter '{code}' does not exist.")

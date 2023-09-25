@@ -10,18 +10,27 @@ Source = Union[Path, str, StringIO]
 
 class SourceWriter:
     def __init__(self, source: Source):
-        self._stream = self._get_stream(source)
+        self._source: Source = source
+        self._stream: TextIO | None = None
 
-    def _get_stream(self, source: Source) -> TextIO:
-        path = self._get_path(source)
+    def __enter__(self):
+        path = self._get_path(self._source)
         if path:
-            stream = open(path, "w")
-        elif is_stringio(source):
-            stream = source
+            self._stream = open(path, "w", encoding="utf8")
+        elif is_stringio(self._source):
+            self._stream = self._source
         else:
             raise ValueError("Source writer failed: "
-                             f"'{source}' is not a valid stream.")
-        return stream
+                             f"'{self._source}' is not a valid stream.")
+        return self
+
+    def __exit__(self, *exc_info):
+        if self._stream is not None:
+            self._stream.close()
+
+    def write(self, content: str) -> None:
+        if self._stream is not None:
+            self._stream.write(content)
 
     @staticmethod
     def _get_path(source: Source) -> str | None:
@@ -31,12 +40,3 @@ class SourceWriter:
             path = Path(source)
             return str(source) if not path.is_dir() else None
         return None
-
-    def write(self, content: str) -> None:
-        self._stream.write(content)
-
-    def __enter__(self):
-        return self
-
-    def __exit__(self, *exc_info):
-        self._stream.close()
