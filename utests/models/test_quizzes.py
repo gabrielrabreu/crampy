@@ -1,6 +1,6 @@
 import unittest
 
-from crampy.models import QuizModel, QuestionModel, OpenAnswerQuestionModel, CompositeQuestionModel
+from crampy.modeling import QuizModel, QuestionModel, OpenAnswerQuestionModel, CompositeQuestionModel
 
 
 class TestQuizModel(unittest.TestCase):

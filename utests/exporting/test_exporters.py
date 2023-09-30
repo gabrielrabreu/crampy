@@ -3,8 +3,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from crampy.exporting import QuizExporter, QuizHtmlConverter
-from crampy.models import QuizModel
+from crampy.converting import QuizExporter, QuizHtmlConverter
+from crampy.modeling import QuizModel
 
 
 TEMPDIR = os.getenv("TEMPDIR") or tempfile.gettempdir()

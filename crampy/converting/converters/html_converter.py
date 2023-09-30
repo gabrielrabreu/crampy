@@ -1,7 +1,7 @@
 from jinja2 import Environment, BaseLoader
 
-from .converter import QuizConverter
-from ...models import QuizModel, QuestionModel, CompositeQuestionModel, OpenAnswerQuestionModel
+from .base_converter import BaseConverter
+from ...modeling import QuizModel, QuestionModel, CompositeQuestionModel, OpenAnswerQuestionModel
 
 
 def _is_composite(question_model: QuestionModel) -> bool:
@@ -19,15 +19,15 @@ def _add_indentation(text: str, depth: int = 0) -> str:
     return text_indented
 
 
-class QuizHtmlConverter(QuizConverter):
+class HtmlConverter(BaseConverter):
     def as_practice_test(self, quiz_model: QuizModel) -> str:
-        return _QuizPracticeTestHtmlConverter().render(quiz_model)
+        return _PracticeTestHtmlConverter().render(quiz_model)
 
     def as_notecards(self, quiz_model: QuizModel) -> str:
-        return _QuizNotecardsHtmlConverter().render(quiz_model)
+        return _NotecardsHtmlConverter().render(quiz_model)
 
 
-class _QuizPracticeTestHtmlConverter:
+class _PracticeTestHtmlConverter:
     @staticmethod
     def _render_style_template() -> str:
         env = Environment(loader=BaseLoader(), autoescape=False)
@@ -76,7 +76,7 @@ class _QuizPracticeTestHtmlConverter:
         )
 
     @staticmethod
-    def _render_main_template(questions: list[QuestionModel], depth: int = 0) -> str:
+    def _render_main_template(questions: tuple[QuestionModel], depth: int = 0) -> str:
         env = Environment(loader=BaseLoader(), autoescape=False)
         env.filters["is_composite"] = _is_composite
         env.filters["is_open_answer"] = _is_open_answer
@@ -104,7 +104,7 @@ class _QuizPracticeTestHtmlConverter:
             questions=questions,
             depth=depth,
             statement_class=statement_class,
-            main_template=_QuizPracticeTestHtmlConverter._render_main_template
+            main_template=_PracticeTestHtmlConverter._render_main_template
         )
 
     @staticmethod
@@ -152,7 +152,7 @@ class _QuizPracticeTestHtmlConverter:
         )
 
 
-class _QuizNotecardsHtmlConverter:
+class _NotecardsHtmlConverter:
     @staticmethod
     def _render_style_template() -> str:
         env = Environment(loader=BaseLoader(), autoescape=False)
@@ -209,7 +209,7 @@ class _QuizNotecardsHtmlConverter:
         return template.render()
 
     @staticmethod
-    def _render_main_template(questions: list[QuestionModel]) -> str:
+    def _render_main_template(questions: tuple[QuestionModel]) -> str:
         env = Environment(loader=BaseLoader(), autoescape=False)
 
         amount = len(questions)
