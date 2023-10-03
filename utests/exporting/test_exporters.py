@@ -3,8 +3,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from crampy.exporting import QuizExporter, QuizHtmlConverter
-from crampy.models import QuizModel
+from crampy.converting import QuizExporter, QuizHtmlConverter
+from crampy.modeling import QuizModel
 
 
 TEMPDIR = os.getenv("TEMPDIR") or tempfile.gettempdir()
@@ -21,7 +21,7 @@ class TestQuizExporter(unittest.TestCase):
 
     def test_as_practice_test_when_code_is_html_then_should_write_to_file(self):
         exporter = QuizExporter()
-        quiz_model = QuizModel("Name", "Area", [])
+        quiz_model = QuizModel("Name", "Area")
         code = "html"
         source = Path(PATH)
 
@@ -34,7 +34,7 @@ class TestQuizExporter(unittest.TestCase):
 
     def test_as_practice_test_when_code_not_found_then_should_raise_value_error(self):
         exporter = QuizExporter()
-        quiz_model = QuizModel("Name", "Area", [])
+        quiz_model = QuizModel("Name", "Area")
         code = "dontexists"
         source = Path(PATH)
 
@@ -44,7 +44,7 @@ class TestQuizExporter(unittest.TestCase):
 
     def test_as_notecards_when_code_is_html_then_should_write_to_file(self):
         exporter = QuizExporter()
-        quiz_model = QuizModel("Name", "Area", [])
+        quiz_model = QuizModel("Name", "Area")
         code = "html"
         source = Path(PATH)
 
@@ -57,7 +57,7 @@ class TestQuizExporter(unittest.TestCase):
 
     def test_as_notecards_when_code_not_found_then_should_raise_value_error(self):
         exporter = QuizExporter()
-        quiz_model = QuizModel("Name", "Area", [])
+        quiz_model = QuizModel("Name", "Area")
         code = "dontexists"
         source = Path(PATH)
 

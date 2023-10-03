@@ -1,9 +1,9 @@
 from abc import ABC, abstractmethod
 
-from ...models import QuizModel
+from ...modeling import QuizModel
 
 
-class QuizConverter(ABC):
+class BaseConverter(ABC):
     @abstractmethod
     def as_practice_test(self, quiz_model: QuizModel) -> str:
         raise NotImplementedError
